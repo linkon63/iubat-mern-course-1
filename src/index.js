@@ -5,29 +5,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import HomePage from './components/Homepage/HomePage';
-import AboutPage from './components/AboutPage/AboutPage';
+import { pagesRoute } from './components/routes/routes';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <HomePage />,
-  },
-  {
-    path: "/home",
-    element: <HomePage />,
-  },
-  {
-    path: "/about",
-    element: <AboutPage />,
-  },
-  {
-    path: "/info",
-    element: <h1>Im info</h1>,
-  },
-]);
+const router = createBrowserRouter(pagesRoute);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
