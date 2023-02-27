@@ -1,12 +1,12 @@
 import React from 'react'
 
-export default function HomeCardTodo({ td, deleteTodo, btnText }) {
+export default function HomeCardTodo({ td, handleFunction, btnText }) {
     return (
         <div>
             <div class="card text-bg-info mb-3">
                 <div class="card-header">
                     {td.id}
-                    <button onClick={() => deleteTodo(td.id)} className='btn btn-danger ms-5'>{btnText}</button>
+                    <button onClick={() => handleFunction(td.id)} className='btn btn-danger ms-5'>{btnText}</button>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">{td.text}</h5>
@@ -21,3 +21,6 @@ export default function HomeCardTodo({ td, deleteTodo, btnText }) {
     // todo component structure
     // enter press to add todo (onkeydown function)
 }
+
+
+

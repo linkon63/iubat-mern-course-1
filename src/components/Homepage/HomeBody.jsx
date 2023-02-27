@@ -1,41 +1,18 @@
 import React, { useState } from 'react'
+import Functions from '../Functions/Functions'
 import HomeCardTodo from './HomeCardTodo'
 
 import './homeStyle.css'
 
 export default function HomeBody() {
-    const [onChangeTodo, setOnChangeTodo] = useState("")
-    const [todos, setTodos] = useState([])
-    const [recentlyDeleted, setRecentlyDeleted] = useState([]);
-    //handle todo value change function
-    const todoOnChange = (e) => {
-        const { value } = e.target; // destructuring 
-        setOnChangeTodo(value)
-        // setOnChangeTodo(e.target)
-        // console.log("💀", name, " : ", value)
-        // console.log("💀", 'linkon', " : ", linkon)
-        // console.log("💀", e.target)
-    }
-    // handle add todo function
-    const addTodo = () => {
-        if (onChangeTodo === "") { // corner case
-            console.log("There is no value")
-            return;
-        }
+    // refactoring component based better performance
+    const { onChangeTodo, todos, recentlyDeleted, todoOnChange, addTodo, deleteTodo, restoreTodo } = Functions();
 
-        const todoObject = { id: Math.random(), text: onChangeTodo }
-        console.log("todoObj:", todoObject)
-        setTodos([...todos, todoObject]) // efficient way
-        setOnChangeTodo("")
-    }
+    // Not better performance
+    // const { todos, deleteTodo, recentlyDeleted, restoreTodo, onChangeTodo, todoOnChange, addTodo } = Functions();
 
-    // handle delete todo function
-    const deleteTodo = (id) => {
-        console.log("id", id)
-        setTodos(todos.filter(td => td.id != id)); // one line state management -> Not recommended
-        setRecentlyDeleted([...recentlyDeleted, todos.filter(td => td.id == id)[0]]) // one line state management -> Not recommended
-    }
-    console.log("Recently dlt", recentlyDeleted)
+
+
     return (
         <div className='container homeBody'>
             {/* heading section */}
@@ -71,7 +48,9 @@ export default function HomeBody() {
             <div className="container">
                 {
                     todos &&
-                    todos.map(td => <HomeCardTodo td={td} key={td.id} deleteTodo={deleteTodo} btnText="Delete" />)
+                    todos.map(td =>
+                        <HomeCardTodo td={td} key={td.id} handleFunction={deleteTodo} btnText="Delete" />
+                    )
                 }
             </div>
             {/* recently deleted */}
@@ -79,7 +58,9 @@ export default function HomeBody() {
                 <h1>Recently Deleted Todos</h1>
                 {
                     recentlyDeleted &&
-                    recentlyDeleted.map(td => <HomeCardTodo td={td} key={td.id} deleteTodo={deleteTodo} btnText="Restore" />)
+                    recentlyDeleted.map(td =>
+                        <HomeCardTodo td={td} key={td.id} handleFunction={restoreTodo} btnText="Restore" />
+                    )
                 }
             </div>
 
